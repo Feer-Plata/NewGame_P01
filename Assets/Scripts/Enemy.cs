@@ -18,10 +18,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.x > -8)
-        {
-            this.transform.position = new Vector3(-25, 0, 0);
-        }
+        //if (this.transform.position.x > -8)
+        //{
+        //    this.transform.position = new Vector3(-25, 0, 0);
+        //}
         transform.Translate(0, 0, speedDesplace * Time.deltaTime);
         rbEnemy.AddForce(player.transform.position - transform.position);
     }
