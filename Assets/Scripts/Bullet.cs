@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Untagged")
+        if (other.tag == "Astro")
         {
             Destroy(gameObject);
         }

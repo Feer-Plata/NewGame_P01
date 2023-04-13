@@ -13,7 +13,7 @@ public class ManagerPlayer : MonoBehaviour
 
     Transform cam;
     public Joystick joystickMove;
-    public Joystick joystickGiro;
+    //public Joystick joystickGiro;
     public Transform player;
     public CharacterController controller;
     float x;
@@ -23,9 +23,7 @@ public class ManagerPlayer : MonoBehaviour
     float rotH;
     public float speedGiro;
 
-    //Atributos Disparo
-    public GameObject bullet;
-    public List<Transform> posBullet;
+
 
     private void Start()
     {
@@ -38,7 +36,6 @@ public class ManagerPlayer : MonoBehaviour
         MovPlayer();
         Rotate();
         CheckLife();
-        DispararBala();
     }
     public void MovPlayer()
     {
@@ -46,11 +43,21 @@ public class ManagerPlayer : MonoBehaviour
         z = joystickMove.Vertical + Input.GetAxis("Vertical");
         move = player.right * x + player.forward * z;
         controller.Move(move * speed * Time.deltaTime);
+        //Limitar moviemiento
+
+        //if (this.transform.position.x < 4)
+        //{
+        //    transform.position = new Vector3(4, transform.position.y, transform.position.z);   //Izquierda
+        //}
+        //if (this.transform.position.x > -4)
+        //{
+        //    transform.position = new Vector3(-4, transform.position.y, transform.position.z);   //Derecha
+        //}
     }
     public void Rotate()
     {
-        rotH = joystickGiro.Horizontal * speedGiro;
-        rotV = -(joystickGiro.Vertical * speedGiro);
+       // rotH = joystickGiro.Horizontal * speedGiro;
+       //rotV = -(joystickGiro.Vertical * speedGiro);
         cam.Rotate(rotV, 0, 0);
         player.Rotate(0, rotH, 0);
     }
@@ -63,17 +70,7 @@ public class ManagerPlayer : MonoBehaviour
         }
     }
 
-    public void DispararBala()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
-            Instantiate(bullet, posBullet[0].position, Quaternion.identity);
-            Instantiate(bullet, posBullet[1].position, Quaternion.identity);
-            //AudioManager.Instance.PlaySFX("Bullet");
-        }
-
-    }
+   
     private void OnTriggerEnter(Collider other)
     {
         //Si el jugador toca al destructor, pierde toda la vida.
@@ -86,5 +83,11 @@ public class ManagerPlayer : MonoBehaviour
             life--;
             barraVida.value = life;
         }
+        if (other.tag == "Astro")                                             //Si lo toca el enemigo, le baja uno de vida al jugador.
+        {
+            life--;
+            barraVida.value = life;
+        }
     }
+
 }

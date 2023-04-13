@@ -6,32 +6,37 @@ public class Spanw : MonoBehaviour
 {
     //Atributos
     public bool PuedeSpawnear = true;
-    public GameObject RedAstreroid;
-    public List<Transform> posicionAster;
+    public GameObject[] Astreroids;
+    public Transform[] posAster;
+
 
     private void Update()
     {
-        Spawn();
+        InstantiateObj();
     }
 
-    private void Spawn()
+    private void InstantiateObj()
     {
         if (PuedeSpawnear)
         {
-            StartCoroutine(SpawnAsteroids(3.5f));
+            StartCoroutine(SpawnAsteroids(1f));
         }
     }
     IEnumerator SpawnAsteroids(float time)
     {
-        int posiciones = Random.Range(0, 2);
-        if (posiciones == 0)
+        int n = Random.Range(0, Astreroids.Length);
+        int w = Random.Range(0, posAster.Length);
+        if (n == 0)
         {
-            Instantiate(RedAstreroid, posicionAster[0].position, Quaternion.identity);
+            Instantiate(Astreroids[n], posAster[w].position, Astreroids[n].transform.rotation);
         }
         else
         {
-            Instantiate(RedAstreroid, posicionAster[1].position, Quaternion.identity);
+            Instantiate(Astreroids[n], posAster[w].position, Astreroids[n].transform.rotation);
         }
+
+                
+
         PuedeSpawnear = false;
         yield return new WaitForSeconds(time);
         PuedeSpawnear = true;
